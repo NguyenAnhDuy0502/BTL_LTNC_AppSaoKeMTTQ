@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Search</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2 class="mb-4">Transaction Table</h2>
+    <!-- Search Inputs -->
+    <div class="row mb-3">
+        <div class="col">
+            <input type="text" id="searchDate" class="form-control" placeholder="Search by Date">
+        </div>
+        <div class="col">
+            <input type="text" id="searchTransNo" class="form-control" placeholder="Search by Transaction No">
+        </div>
+        <div class="col">
+            <input type="text" id="searchCredit" class="form-control" placeholder="Search by Credit">
+        </div>
+        <div class="col">
+            <input type="text" id="searchDebit" class="form-control" placeholder="Search by Debit">
+        </div>
+        <div class="col">
+            <input type="text" id="searchDetail" class="form-control" placeholder="Search by Detail">
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th>Date</th>
+            <th>TranNo</th>
+            <th>Credit</th>
+            <th>Debit</th>
+            <th>Detail</th>
+        </tr>
+        </thead>
+        <tbody id="transactionTableBody">
+        <!-- Auto add record by FirstLoad.js -->
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Add module d3 use for file .csv in FirstLoad.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<!-- First load -->
+<script src="FirstLoad.js"></script>
+<!-- Search -->
+<script src="Search.js"></script>
+
+</body>
+
+</html>
