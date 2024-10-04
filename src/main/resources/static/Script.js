@@ -2,14 +2,41 @@
     let currentPage = 1;
     let transactions = [];
 
-    // Load CSV data
-    d3.csv('chuyen_khoan.csv').then(data => {
-        transactions = data;
-        displayPage(currentPage);
-        setupPagination();
-    }).catch(error => {
-        console.error('Error:', error);
-    });
+    fetch('http://localhost:8080/all', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(data => {
+                transactions = data;
+                displayPage(currentPage);
+                setupPagination();
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+
+    function search() {
+        // Tạo URL với các query parameters
+        const url = new URL('http://localhost:8080/search');
+        url.searchParams.append('Date', date);
+        url.searchParams.append('TransactionNo', transactionNo);
+        url.searchParams.append('Credit', credit);
+        url.searchParams.append('Debit', debit);
+        url.searchParams.append('Detail', detail);
+         // Sử dụng fetch API để gọi đến RestController với phương thức GET
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(data => {
+            transactions = data;
+            displayPage(currentPage);
+            setupPagination();
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
     function displayPage(page) {
         const tableBody = document.getElementById('transactionTableBody');
