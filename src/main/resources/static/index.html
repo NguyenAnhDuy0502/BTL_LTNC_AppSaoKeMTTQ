@@ -14,6 +14,15 @@
         .pagination {
             justify-content: center;
         }
+        #DeleteId
+        {
+            width: 300px;
+            margin-right: 20px;
+        }
+        .btn-danger
+        {
+            width: 100px;
+        }
     </style>
 </head>
 
@@ -23,22 +32,27 @@
     <!-- Search Inputs -->
     <div class="row mb-3">
         <div class="col">
-            <input type="text" id="searchDate" class="form-control" placeholder="Search by Date">
+            <input type="text" id="searchDate" class="form-control" placeholder="Search by Date" onkeyup="searchTransaction()">
         </div>
         <div class="col">
-            <input type="text" id="searchTransNo" class="form-control" placeholder="Search by Transaction No">
+            <input type="text" id="searchTransNo" class="form-control" placeholder="Search by Transaction No" onkeyup="searchTransaction()">
         </div>
         <div class="col">
-            <input type="text" id="searchCredit" class="form-control" placeholder="Search by Credit">
+            <input type="text" id="searchCredit" class="form-control" placeholder="Search by Credit" onkeyup="searchTransaction()">
         </div>
         <div class="col">
-            <input type="text" id="searchDebit" class="form-control" placeholder="Search by Debit">
+            <input type="text" id="searchDebit" class="form-control" placeholder="Search by Debit" onkeyup="searchTransaction()">
         </div>
         <div class="col">
-            <input type="text" id="searchDetail" class="form-control" placeholder="Search by Detail">
+            <input type="text" id="searchDetail" class="form-control" placeholder="Search by Detail" onkeyup="searchTransaction()">
         </div>
     </div>
-
+    <div class="row mb-3">
+        <div class="col d-flex">
+            <input type="text" id="DeleteId" class="form-control" placeholder="Delete by Transaction No">
+            <button class="btn btn-danger" type="button" onclick="deleteTransaction()">Delete</button>
+        </div>
+    </div>
     <!-- Table -->
     <table class="table table-bordered">
         <thead class="thead-light">
@@ -51,7 +65,7 @@
         </tr>
         </thead>
         <tbody id="transactionTableBody">
-        <!-- Auto add record by FirstLoad.js -->
+        <!-- Auto add record by Script.js -->
         </tbody>
     </table>
     <nav aria-label="Page navigation">
@@ -63,12 +77,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Add module d3 use for file .csv in FirstLoad.js -->
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <!-- First load -->
-<script src="FirstLoad.js"></script>
-<!-- Search -->
-<script src="Search.js"></script>
+<script src="Script.js"></script>
+
 
 </body>
 

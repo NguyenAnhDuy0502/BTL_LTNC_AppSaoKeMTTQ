@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class TransactionsArrayBean {
+public class TransactionsListBean {
 
     @Bean
-    public List<Transaction> createArrayTransactions()
+    public ChanningHashMap createArrayTransactions()
     {
-        String csvFile = "src/main/resources/chuyen_khoan.csv"; // Đường dẫn đến tệp CSV
-        List<Transaction> transactions = new ArrayList<>(); // Mảng chứa các đối tượng Transaction
+        String csvFile = "src/main/resources/static/chuyen_khoan.csv"; // Đường dẫn đến tệp CSV
+        ChanningHashMap transList = new ChanningHashMap(); // Mảng chứa các đối tượng Transaction
 
         try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
             String[] nextLine = reader.readNext();
@@ -23,7 +23,7 @@ public class TransactionsArrayBean {
             while ((nextLine = reader.readNext()) != null) {
                 // Giả sử các cột trong CSV theo thứ tự: dateTime, transNo, credit, debit, detail
                 String dateTime = nextLine[0];
-                String transNo = nextLine[1];
+                int transNo = Integer.parseInt(nextLine[1]);
                 double credit = Double.parseDouble(nextLine[2]);
                 double debit = Double.parseDouble(nextLine[3]);
                 String detail = nextLine[4];
@@ -32,12 +32,12 @@ public class TransactionsArrayBean {
                 Transaction transaction = new Transaction(dateTime, transNo, credit, debit, detail);
 
                 // Thêm đối tượng Transaction vào mảng
-                transactions.add(transaction);
+                transList.add(transaction);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return transactions;
+        return transList;
     }
 }

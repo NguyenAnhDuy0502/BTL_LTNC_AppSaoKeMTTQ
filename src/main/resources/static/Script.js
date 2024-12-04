@@ -2,11 +2,16 @@
     let currentPage = 1;
     let transactions = [];
 
-    fetch('http://localhost:8080/all', {
+    getAll();
+
+    function getAll() {
+    fetch('http://localhost:8080/api/all', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
+            }).then(response => {
+                   return response.json();
             }).then(data => {
                 transactions = data;
                 displayPage(currentPage);
@@ -14,33 +19,76 @@
             }).catch(error => {
                 console.error('Error:', error);
             });
+    }
 
-    function search() {
+    function deleteTransaction() {
+        let transactionNo = document.getElementById('DeleteId').value;
+
         // Tạo URL với các query parameters
-        const url = new URL('http://localhost:8080/search');
-        url.searchParams.append('Date', date);
-        url.searchParams.append('TransactionNo', transactionNo);
-        url.searchParams.append('Credit', credit);
-        url.searchParams.append('Debit', debit);
-        url.searchParams.append('Detail', detail);
-         // Sử dụng fetch API để gọi đến RestController với phương thức GET
-        fetch(url, {
+            let url = new URL('http://localhost:8080/api/delete');
+            url.searchParams.append('TransactionNo', transactionNo);
+
+           fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             }
-        }).then(data => {
-            transactions = data;
-            displayPage(currentPage);
-            setupPagination();
-        }).catch(error => {
-            console.error('Error:', error);
-        });
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                transactions = data;
+                displayPage(currentPage);
+                setupPagination();
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function searchTransaction() {
+        //Kiểm tra performance
+        const startTime = performance.now();
+
+        let date = document.getElementById('searchDate').value;
+        let transactionNo = document.getElementById('searchTransNo').value;
+        let credit = document.getElementById('searchCredit').value;
+        let debit = document.getElementById('searchDebit').value;
+        let detail = document.getElementById('searchDetail').value;
+
+        if (!date && !transactionNo && !credit && !debit && !detail)
+           getAll();
+        else {
+        // Tạo URL với các query parameters
+            let url = new URL('http://localhost:8080/api/search');
+            url.searchParams.append('Date', date);
+            url.searchParams.append('TransactionNo', transactionNo);
+            url.searchParams.append('Credit', credit);
+            url.searchParams.append('Debit', debit);
+            url.searchParams.append('Detail', detail);
+
+           fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                transactions = data;
+                displayPage(currentPage);
+                setupPagination();
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        //Kiểm tra performance, do độ chính xác chỉ tới 1/1000 ms nên cần làm tròn
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+        console.log(`Thời gian thực hiện: ${duration.toFixed(3)} ms`);
     }
 
     function displayPage(page) {
         const tableBody = document.getElementById('transactionTableBody');
-        tableBody.innerHTML = ''; // Clear previous entries
+        tableBody.innerHTML = '';
 
         const start = (page - 1) * itemsPerPage;
         const end = start + itemsPerPage;
@@ -49,8 +97,8 @@
         pageItems.forEach(transaction => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${transaction.date_time}</td>
-                <td>${transaction.trans_no}</td>
+                <td>${transaction.dateTime}</td>
+                <td>${transaction.transNo}</td>
                 <td>${transaction.credit}</td>
                 <td>${transaction.debit}</td>
                 <td>${transaction.detail}</td>
@@ -61,7 +109,7 @@
 
     function setupPagination() {
         const pagination = document.getElementById('pagination');
-        pagination.innerHTML = ''; // Clear previous pagination
+        pagination.innerHTML = '';
 
         const pageCount = Math.ceil(transactions.length / itemsPerPage);
 
