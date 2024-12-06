@@ -6,16 +6,17 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 public class TransactionsListBean {
 
     @Bean
-    public ChanningHashMap createArrayTransactions()
+    public List<Transaction> createArrayTransactions()
     {
         String csvFile = "src/main/resources/static/chuyen_khoan.csv"; // Đường dẫn đến tệp CSV
-        ChanningHashMap transList = new ChanningHashMap(); // Mảng chứa các đối tượng Transaction
+        List<Transaction> transList = new ArrayList<>(); // Mảng chứa các đối tượng Transaction
 
         try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
             String[] nextLine = reader.readNext();

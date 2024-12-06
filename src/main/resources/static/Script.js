@@ -54,9 +54,7 @@
         let debit = document.getElementById('searchDebit').value;
         let detail = document.getElementById('searchDetail').value;
 
-        if (!date && !transactionNo && !credit && !debit && !detail)
-           getAll();
-        else {
+
         // Tạo URL với các query parameters
             let url = new URL('http://localhost:8080/api/search');
             url.searchParams.append('Date', date);
@@ -79,12 +77,35 @@
             }).catch(error => {
                 console.error('Error:', error);
             });
-        }
         //Kiểm tra performance, do độ chính xác chỉ tới 1/1000 ms nên cần làm tròn
         const endTime = performance.now();
         const duration = endTime - startTime;
         console.log(`Thời gian thực hiện: ${duration.toFixed(3)} ms`);
     }
+    function searchCredit() {
+            let minCredit = document.getElementById('MinId').value;
+            let maxCredit = document.getElementById('MaxId').value;
+
+            // Tạo URL với các query parameters
+                let url = new URL('http://localhost:8080/api/searchCredit');
+                url.searchParams.append('MinCredit', minCredit);
+                url.searchParams.append('MaxCredit', maxCredit);
+
+               fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+                    transactions = data;
+                    displayPage(currentPage);
+                    setupPagination();
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+        }
 
     function displayPage(page) {
         const tableBody = document.getElementById('transactionTableBody');

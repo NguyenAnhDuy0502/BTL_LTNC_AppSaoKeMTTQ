@@ -14,14 +14,18 @@
         .pagination {
             justify-content: center;
         }
-        #DeleteId
+        #MaxId, #MinId
         {
-            width: 300px;
+            width: 200px;
             margin-right: 20px;
         }
-        .btn-danger
+        .btn-primary
         {
-            width: 100px;
+            width: 200px;
+        }
+        #searchOnlyCredit
+        {
+            width: 150px;
         }
     </style>
 </head>
@@ -32,25 +36,32 @@
     <!-- Search Inputs -->
     <div class="row mb-3">
         <div class="col">
-            <input type="text" id="searchDate" class="form-control" placeholder="Search by Date" onkeyup="searchTransaction()">
+            <input type="text" id="searchDate" class="form-control" placeholder="Search by Date">
         </div>
         <div class="col">
-            <input type="text" id="searchTransNo" class="form-control" placeholder="Search by Transaction No" onkeyup="searchTransaction()">
+            <input type="text" id="searchTransNo" class="form-control" placeholder="Search by Transaction No">
         </div>
         <div class="col">
-            <input type="text" id="searchCredit" class="form-control" placeholder="Search by Credit" onkeyup="searchTransaction()">
+            <input type="text" id="searchCredit" class="form-control" placeholder="Search by Credit">
         </div>
         <div class="col">
-            <input type="text" id="searchDebit" class="form-control" placeholder="Search by Debit" onkeyup="searchTransaction()">
+            <input type="text" id="searchDebit" class="form-control" placeholder="Search by Debit">
         </div>
         <div class="col">
-            <input type="text" id="searchDetail" class="form-control" placeholder="Search by Detail" onkeyup="searchTransaction()">
+            <input type="text" id="searchDetail" class="form-control" placeholder="Search by Detail">
         </div>
+        <div class="col">
+            <button class="btn btn-primary" type="button" onclick="searchTransaction()">Search</button>
+        </div>
+
     </div>
     <div class="row mb-3">
         <div class="col d-flex">
-            <input type="text" id="DeleteId" class="form-control" placeholder="Delete by Transaction No">
-            <button class="btn btn-danger" type="button" onclick="deleteTransaction()">Delete</button>
+            <input type="text" id="MinId" class="form-control" placeholder="Min">
+            <input type="text" id="MaxId" class="form-control" placeholder="Max">
+            <button class="btn btn-primary" id="searchOnlyCredit" type="button" onclick="searchCredit()">Search
+                Credit
+            </button>
         </div>
     </div>
     <!-- Table -->
